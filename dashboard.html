@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">💼 Mi Cartera Financiera</span>
+            <span id="user-name" class="text-white me-3" style="font-weight: 600;"></span>
+            <button id="logout" class="btn btn-outline-danger btn-sm">Cerrar sesión</button>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1>Panel de Usuario</h1>
+            </div>
+        </div>
+        
+        <!-- BALANCE SECTION -->
+        <div class="row mb-4">
+            <div class="col-12" id="balance"></div>
+        </div>
+
+        <!-- FINANCE CONTROLS SECTION -->
+        <div class="row mb-5">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mb-4">📝 Registrar movimiento</h4>
+                        <form id="movement-form">
+                            <div class="mb-3">
+                                <label for="mov-type" class="form-label">Tipo</label>
+                                <select id="mov-type" class="form-select">
+                                    <option value="income">Ingreso</option>
+                                    <option value="expense">Gasto</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mov-amount" class="form-label">Monto</label>
+                                <input type="number" step="0.01" id="mov-amount" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mov-date" class="form-label">Fecha</label>
+                                <input type="date" id="mov-date" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mov-category" class="form-label">Categoría</label>
+                                <select id="mov-category" class="form-select"></select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mov-desc" class="form-label">Descripción</label>
+                                <input type="text" id="mov-desc" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Guardar movimiento</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h4 class="mb-4">🏷️ Categorías</h4>
+                        <ul id="category-list" class="list-group mb-3"></ul>
+                        <form id="category-form">
+                            <div class="input-group">
+                                <input type="text" id="new-category" class="form-control" placeholder="Nueva categoría" required>
+                                <button type="submit" class="btn btn-primary">Agregar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mb-4">💰 Presupuesto mensual</h4>
+                        <form id="budget-form">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">$</span>
+                                <input type="number" step="0.01" id="budget-amount" class="form-control" value="0">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Guardar presupuesto</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATISTICS SECTION -->
+        <div class="row mb-4">
+            <div class="col-12" id="statistics"></div>
+        </div>
+
+        <!-- HISTORY SECTION -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mb-4">📊 Historial de movimientos</h4>
+                        <form id="filter-form" class="row g-2 mb-4">
+                            <div class="col-md-3">
+                                <input type="date" id="filter-from" class="form-control" placeholder="Desde">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="date" id="filter-to" class="form-control" placeholder="Hasta">
+                            </div>
+                            <div class="col-md-3">
+                                <select id="filter-category" class="form-select">
+                                    <option value="">Todas las categorías</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary w-100">Aplicar filtro</button>
+                            </div>
+                        </form>
+                        <button type="button" id="reset-filter" class="btn btn-outline-secondary mb-3">Limpiar filtros</button>
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="history-table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Monto</th>
+                                        <th>Fecha</th>
+                                        <th>Categoría</th>
+                                        <th>Descripción</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/finance.js"></script>
+    <script src="assets/js/user.js"></script>
+    <script src="assets/js/app.js"></script>
+    
+    <footer class="footer mt-5 py-3 bg-dark text-white text-center">
+        <div class="container">
+            <small>&copy; 2026 Sistema de Gestión Financiera Multiperfil - Panel de Usuario.</small>
+        </div>
+    </footer>
+</body>
+</html>
